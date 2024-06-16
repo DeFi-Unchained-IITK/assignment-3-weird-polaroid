@@ -21,9 +21,18 @@ jobs:
         setup-command: ''
         command: forge test
         timeout: 10
+    - name: Compile
+      id: compile
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Compile
+        setup-command: ''
+        command: forge build
+        timeout: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST_RESULTS: "${{steps.test.outputs.result}}"
+        COMPILE_RESULTS: "${{steps.compile.outputs.result}}"
       with:
-        runners: test
+        runners: test,compile
